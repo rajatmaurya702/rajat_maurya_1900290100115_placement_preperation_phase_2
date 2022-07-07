@@ -1,0 +1,40 @@
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int gap1 = ceil((float)(n + m)/2);
+        for(int i = 0; i< n; i++){
+            nums1.pop_back();
+        }
+        // m -= n;
+        cout << gap1 << " ";
+        for(int gap = gap1; gap > 0; gap = ceil((float)gap/(float)2)){
+            cout << "hi " << gap << "\n";
+            for(int i = 0; i + gap< n + m; i++){
+                int id1 = i, id2 = i + gap;
+                if(id2 < m){
+                    if(nums1[id1] > nums1[id2])
+                        swap(nums1[id1], nums1[id2]);
+                }
+                else if(id1 < m && id2 >= m){
+                    if(nums1[id1]> nums2[id2-m])
+                        swap(nums1[id1], nums2[id2-m]);
+                }
+                else{
+                    if(nums2[id1-m]> nums2[id2-m])
+                        swap(nums2[id1-m], nums2[id2-m]);
+                }
+                
+            }
+            for(auto x: nums1) cout << x << " ";
+            for(auto x: nums2) cout << x << " ";
+            cout << "\n";
+            if(gap==1) break;
+        }
+        for(auto x: nums2){
+            nums1.push_back(x);
+        }
+        // nums1.push_back(num2);
+        
+        
+    }
+};

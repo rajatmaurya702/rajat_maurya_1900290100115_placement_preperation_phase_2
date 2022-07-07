@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> p;
+        p.push_back(vector<int> (1, 1));
+        
+        for(int i = 1; i< numRows; i ++){
+            p.push_back(vector<int>());
+            for(int j = 0; j <= i; j ++){
+                int val = (j < p[i-1].size() ? p[i-1][j]: 0) + (j-1 >= 0? p[i-1][j - 1]: 0);
+                p.back().push_back(val);
+            }
+        }
+        return p;
+    }
+};

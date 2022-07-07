@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void sortColors(vector<int>& num) {
+        int left = -1, right = num.size();//0, 2
+        int n = num.size();
+        int i = 0;
+        while(i<n){
+            if(i==right) break;
+            if(num[i] == 0){
+                swap(num[i], num[++left]);
+                if(i==left)i++;
+            }
+            else if(num[i] == 2){
+                swap(num[i], num[--right]);
+            }
+            else i++;
+        }
+        
+        
+    }
+};

@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& a) {
+        int n = a.size();
+        int id = n-1;
+        for(; id >= 0; id --){
+            if(id==0) break;
+            if(id-1 >= 0){
+                if(a[id-1] < a[id]){
+                    break;
+                }
+            }
+            
+        }
+        if(id!=0){
+            int min_ = id;
+            for(int i = id; i< n; i++){
+                if(a[i] > a[id-1] && a[i] <= a[min_]){
+                    min_ = i;
+                }
+            }
+            swap(a[id-1], a[min_]);
+        }
+        
+        reverse(a.begin() + id, a.end());
+      
+    }
+};
