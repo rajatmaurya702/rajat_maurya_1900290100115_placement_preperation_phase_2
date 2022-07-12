@@ -1,0 +1,19 @@
+class Solution{
+    public:
+    int maxLen(vector<int>&A, int n)
+    {   
+        // Your code here
+        unordered_map<int,int> h;
+        
+        int sum = 0, ans = 0;
+        for(int i = 0; i< n; i++){
+            sum += A[i];
+            if(sum==0) ans = max(ans, i + 1);
+            if(h[sum]!=0) ans = max(ans, abs(h[sum]-1 - i));
+            
+            if(h[sum]!=0) h[sum] = min(h[sum], i + 1);
+            else h[sum] = i + 1;
+        }
+        return ans;
+    }
+};
