@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+ll merge(int l, int r, ll *arr, int n){
+    int mid = l + (r - l)/2;
+    ll l1 = l, l2 = mid + 1;
+    
+    ll inversion_cnt = 0;
+    vector<int> sorted_sub_array;
+    while(l1<= mid && l2 <= r){
+        if(arr[l1] <= arr[l2]){
+            sorted_sub_array.push_back(arr[l1++]);
+        }
+        else {
+            inversion_cnt += mid - l1 + 1;
+            sorted_sub_array.push_back(arr[l2++]);
+        }
+    }
+    while(l1 <= mid){
+        sorted_sub_array.push_back(arr[l1++]);
+    }
+    while(l2 <= r){
+        sorted_sub_array.push_back(arr[l2++]);
+    }
+    
+    for(auto i = l; i<= r; i++){
+        arr[i] = sorted_sub_array[i - l];
+    }
+    return inversion_cnt;
+}
+
+// 1 2 7 ||  4 5 6
+
+ll mergesort(int l, int r, ll *arr, int n){//return inversion
+    if(l >= r) return 0;
+    int mid = l + (r - l)/2;
+    
+    ll a = mergesort(l, mid, arr, n);
+    ll b = mergesort(mid+1, r, arr, n);
+    ll c = merge(l, r, arr, n);
+    return a + b + c;
+}
+
+ll getInversions(long long *arr, int n){
+    return mergesort(0, n-1, arr, n);
+}
