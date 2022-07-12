@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int ans = 0; 
+        int l = 0, r = -1;
+        vector<int> cnt(300, 0);
+        while(r < (int)s.size()){
+            if(r+1 >= s.size()) break;
+            if(cnt[s[r + 1]] ==0){
+                cnt[s[r+1]] ++;
+                r++;
+                ans = max(r - l + 1, ans);
+            }
+            else{
+                cnt[s[l]]--;
+                l++;
+            }
+        }
+        return ans;
+        
+    }
+};
