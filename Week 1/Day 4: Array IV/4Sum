@@ -1,0 +1,47 @@
+class Solution {
+public:
+    
+    // -2 -1 0 0 1 2
+    set<vector<int>> h;
+
+    void ksum(vector<int> &nums, int nsum, int idx, long long target
+                            ,vector<int> &temp){
+        if(nsum==2){
+            int l = idx, r = nums.size()-1;
+            while(l < r){
+                if(nums[l]+ nums[r] == target) {
+                    
+                    temp.push_back(nums[l]);
+                    temp.push_back(nums[r]);
+                    h.insert(temp);
+                    temp.pop_back();
+                    temp.pop_back();
+                    r--;
+                    
+                }
+                else if(nums[l] + nums[r] < target) l++;
+                else r--;
+            }
+        }
+        else{
+            
+            for(int i = idx; i + nsum-1< nums.size(); i++){
+                temp.push_back(nums[i]);
+                ksum(nums, nsum-1, i + 1, (long long)target - nums[i], temp);
+                temp.pop_back();
+            }
+        }
+    }
+    
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        vector<int> temp;
+        ksum(nums, 4, 0, target, temp);
+        
+        vector<vector<int>> ans;
+        for(auto x: h){
+            ans.push_back(x);
+        }
+        return ans;
+    }
+};
