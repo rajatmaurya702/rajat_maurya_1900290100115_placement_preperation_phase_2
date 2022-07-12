@@ -1,0 +1,34 @@
+int Solution::solve(vector<int> &A, int B) {
+    map<int, int> cnt;
+    int n = A.size(), xor_ = 0;
+    int ans = 0;
+    
+    for(int i = 0; i< n; i++){
+        xor_ ^= A[i];
+        // cout << xor_ << " ";
+        
+        if(xor_ == B) {
+            ans++;
+            // cout << 1 << " ||";
+        //     // continue;
+        }
+        // cout << cnt[xor_ ^ B] << " ||";
+        ans += cnt[xor_ ^ B];
+        cnt[xor_]++;
+    }
+    return ans;
+    
+    
+    
+}
+/*
+4 2 2 6 4
+2 6
+2 2 6
+4 2
+
+
+
+4 6 4 2 6 XOR
+
+*/
