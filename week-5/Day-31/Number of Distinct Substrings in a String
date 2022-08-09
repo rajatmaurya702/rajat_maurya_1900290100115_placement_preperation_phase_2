@@ -1,0 +1,57 @@
+//Simple C++ Solution
+
+struct node{
+	node* links[26];
+	
+	node(){
+		for(int i=0;i<26;i++){
+			links[i]=NULL;
+		}
+	}
+	
+	bool keypresent(char k){
+		return (links[k-'a']!=NULL);
+	}
+	
+	node* next(char k){
+		return links[k-'a'];
+	}
+	
+};
+
+class trie{
+private:
+	node* root;
+	int ans;
+	
+public:
+	trie(){
+		root=new node;
+		ans=1; // for empty string
+	}
+	
+	void insert(string &word, int ind){
+		node* n=root;
+		for(int i=ind;i<word.size();i++){
+			if(!n->keypresent(word[i])){
+				ans++;
+				n->links[word[i]-'a']=new node;
+			}
+			n=n->next(word[i]);
+		}
+	}
+	
+	int getans(){
+		return ans;
+	}
+};
+
+int countDistinctSubstrings(string &s)
+{
+	trie t;
+	for(int i=0;i<s.size();i++){
+		t.insert(s,i);
+	}
+	
+	return t.getans();
+}
