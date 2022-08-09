@@ -1,0 +1,61 @@
+int static t[510][510];
+class Solution{
+public:
+
+bool isPalimdrom(string s,int start,int end)
+{
+   if(start==end)return true;
+   if(start>end)return true;
+   while(start<end)
+   {
+       if(s[start]!=s[end])
+       {
+           return false;
+       }
+       start++;
+       end--;
+       
+   }
+   return true;
+}
+int solve(string s,int start,int end)
+{
+   if(start>=end)return 0;
+   if(t[start][end]!=-1)return t[start][end];
+   if(isPalimdrom(s,start,end))return 0;
+   int mn=INT_MAX;
+   for(int k=start;k<=end-1;k++)
+   {
+       int left,right;
+       if(t[start][k]!=-1)
+       {
+            left=t[start][k];
+       }
+       else
+       {
+            left=solve(s,start,k);
+       }
+       if(t[k+1][end]!=-1)
+       {
+            right=t[k+1][end];
+           
+       }
+       else
+       {
+            right=solve(s,k+1,end);
+       }
+       int temp=left+right+1;
+       if(temp<mn)
+       mn=temp;
+   }
+   t[start][end]=mn;
+   return mn;
+   
+}
+   int palindromicPartition(string str)
+   {
+       // code here
+       memset(t,-1,sizeof(t));
+       return solve(str,0,str.size()-1);
+   }
+
