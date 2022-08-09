@@ -1,0 +1,35 @@
+private:
+    unordered_map<string,int> mp;
+    int dp[1101][1101];
+    int len=0;
+public:
+    
+    bool isWord(string s,int i,int k)
+    {
+        if(i >= len || k >= len)
+            return false;
+        
+        if(mp.find(s.substr(i,len-i))!=mp.end())
+            return true;
+        
+        if(dp[i][k]!=-1)
+            return dp[i][k];
+        
+        bool take=false,notake=false;
+        if(mp.find( s.substr(i,k-i+1) )!=mp.end())
+              take = isWord(s,k+1,k+1);
+        
+        notake = isWord(s,i,k+1);
+        
+        return dp[i][k] = notake||take;
+        
+    }
+    int wordBreak(string s, vector<string>& wordDict) {
+        
+        for(string k:wordDict)      mp[k]++;
+        
+        memset(dp,-1,sizeof(dp));
+        len=s.length();
+        
+        return isWord(s,0,0);
+    }
